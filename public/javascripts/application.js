@@ -120,9 +120,7 @@ var crm = {
   // Hide accounts dropdown and show create new account edit field instead.
   //----------------------------------------------------------------------------
   create_account: function(and_focus) {
-    $("account_disabled_title").hide();
-    $("account_select_title").hide();
-    $("account_create_title").show();
+
     $("account_id").hide();
     $("account_id").disable();
     $("account_name").enable();
@@ -136,9 +134,7 @@ var crm = {
   // Hide create account edit field and show accounts dropdown instead.
   //----------------------------------------------------------------------------
   select_account: function(and_focus) {
-    $("account_disabled_title").hide();
-    $("account_create_title").hide();
-    $("account_select_title").show();
+
     $("account_name").hide();
     $("account_name").disable();
     $("account_id").enable();
@@ -151,9 +147,7 @@ var crm = {
   // Show accounts dropdown and disable it to prevent changing the account.
   //----------------------------------------------------------------------------
   select_existing_account: function() {
-    $("account_create_title").hide();
-    $("account_select_title").hide();
-    $("account_disabled_title").show();
+
     $("account_name").hide();
     $("account_name").disable();
     $("account_id").disable();
@@ -257,7 +251,7 @@ var crm = {
   flip_notes_and_emails: function(state, more, less) {
     var notes = $("shown_notes").value;
     var emails = $("shown_emails").value;
-
+alert("a");
     if (notes != "" || emails != "") {
       new Ajax.Request(this.base_url + "/home/timeline", {
         method     : "get",

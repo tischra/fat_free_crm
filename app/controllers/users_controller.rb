@@ -17,10 +17,7 @@
 
 class UsersController < ApplicationController
 
-  before_filter :require_no_user, :only => [ :new, :create ]
-  before_filter :require_user, :only => [ :show, :redraw ]
-  before_filter :set_current_tab, :only => [ :show ] # Don't hightlight any tabs.
-  before_filter :require_and_assign_user, :except => [ :new, :create, :show ]
+
 
   # GET /users
   # GET /users.xml                              HTML (not directly exposed yet)
@@ -45,16 +42,14 @@ class UsersController < ApplicationController
   # GET /users/new.xml                                                     HTML
   #----------------------------------------------------------------------------
   def new
-    if can_signup?
+
       @user = User.new
 
       respond_to do |format|
         format.html # new.html.haml <-- signup form
         format.xml  { render :xml => @user }
       end
-    else
-      redirect_to login_path
-    end
+
   end
   
   # GET /users/1/edit                                                      AJAX
