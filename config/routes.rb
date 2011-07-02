@@ -7,7 +7,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :passwords
   map.resources :comments
   map.resources :emails
-
   map.resources :tasks,
     :collection => {
       :auto_complete => :post
@@ -52,7 +51,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login   "login",   :controller => "authentications", :action => "new"
   map.logout  "logout",  :controller => "authentications", :action => "destroy"
   map.admin   "admin",   :controller => "admin/users",     :action => "index"
-
+ 
   map.namespace :admin do |admin|
     admin.resources :users, :collection => { :search => :get, :auto_complete => :post }, :member => { :suspend => :put, :reactivate => :put, :confirm => :get }
     admin.resources :settings
