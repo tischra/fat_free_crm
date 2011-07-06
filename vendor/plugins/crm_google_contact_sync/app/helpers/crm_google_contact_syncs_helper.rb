@@ -1,0 +1,2 @@
+module CrmGoogleContactSyncsHelper
+end

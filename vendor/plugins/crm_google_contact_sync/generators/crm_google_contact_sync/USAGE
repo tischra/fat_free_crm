@@ -1,0 +1,8 @@
+Description:
+    Explain the generator
+
+Example:
+    ./script/generate crm_google_contact_sync Thing
+
+    This will create:
+        what/will/it/create
