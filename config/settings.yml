@@ -236,28 +236,5 @@ task_completed:
   - :completed_this_month
   - :completed_last_month
 
-invoice_stem:
-  DR_2009_
 
-invoice_currencies: [
-  ["USD",        :dollar],
-  ["GBP",        :sterling],
-  ["EUR",        :euro]
-]
-
-invoice_vat:
-  "Standard"      : 17.5
-  "Low"           : 6
-  "High"          : 22.5
-  "Zero"          : 0
-
-invoice_status:
-  :open          : Open
-  :approved      : Approved
-  :sent          : Sent
-  :credit        : Credit
-  :late          : Late
-  :demand        : Demand
-  :legal         : Legal
-  :paid          : Paid
 
