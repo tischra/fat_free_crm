@@ -217,8 +217,10 @@ class CrmGoogleContactSyncsController < ApplicationController
     else
       flash[:notice] = "You don't have access to this section"
       redirect_to '/'
+      return
     end
 
     redirect_to '/'
+    return
   end
 end
