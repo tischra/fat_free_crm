@@ -5,9 +5,9 @@ class CrmGoogleAccountSettingsViewHooks < FatFreeCRM::Callback::Base
 - form_tag('/google_accounts/settings') do
   .subtitle= t :google_account_settings
   - if CrmGoogleContactSync.find_by_user_id(@current_user.id)
-    = link_to 'Google Contact Sync', CrmGoogleContactSync.find_by_user_id(@current_user.id)
+    = link_to t(:crm_google_contact_sync), CrmGoogleContactSync.find_by_user_id(@current_user.id)
   - else
-    = link_to 'Google Contact Sync', new_crm_google_contact_sync_path
+    = link_to t(:crm_google_contact_sync), new_crm_google_contact_sync_path
 
   .section
     %table{ :width => 500, :cellpadding => 0, :cellspacing => 0 }

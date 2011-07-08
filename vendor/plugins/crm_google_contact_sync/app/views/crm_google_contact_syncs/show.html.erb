@@ -1,19 +1,20 @@
+<h1><%=t :view_crm_google_contact_sync %>: </h1>
+<% if  @crm_google_contact_sync.token == nil %>
 <%= link_to "Sync Google contacs", :controller => 'crm_google_contact_syncs', :action => "sync_google_contact" %>
+<% end %>
 <p>
-  <b>Email:</b>
+  <b><%=t :email %>:</b>
   <%=h @crm_google_contact_sync.email %>
 </p>
 
 <p>
-  <b>Lead group:</b>
+  <b><%=t :lead_group %>:</b>
   <%=h @crm_google_contact_sync.lead_group %>
 </p>
 
 <p>
-  <b>Contact group:</b>
+  <b><%=t :contact_group %>:</b>
   <%=h @crm_google_contact_sync.contact_group %>
 </p>
 
-
-<%= link_to 'Edit', edit_crm_google_contact_sync_path(@crm_google_contact_sync) %> |
-<%= link_to 'Back', crm_google_contact_syncs_path %>
+<%= link_to t(:delete), @crm_google_contact_sync, :confirm => 'Are you sure?', :method => :delete %>

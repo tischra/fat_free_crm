@@ -1,23 +1,22 @@
-<h1>New crm_google_contact_sync</h1>
+<h1><%= t :create_crm_google_contact_sync %></h1>
 
 <% form_for(@crm_google_contact_sync) do |f| %>
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :email %><br />
+    <%= f.label t(:email) %><br />
     <%= f.text_field :email %>
   </p>
   <p>
-    <%= f.label :lead_group %><br />
+    <%= f.label t(:lead_group) %><br />
     <%= f.text_field :lead_group %>
   </p>
   <p>
-    <%= f.label :contact_group %><br />
+    <%= f.label t(:contact_group) %><br />
     <%= f.text_field :contact_group %>
   </p>
   <p>
-    <%= f.submit 'Create' %>
+    <%= f.submit t(:create) %>
   </p>
 <% end %>
-
-<%= link_to 'Back', crm_google_contact_syncs_path %>
+<%= link_to t(:back), url_for(:back) %>

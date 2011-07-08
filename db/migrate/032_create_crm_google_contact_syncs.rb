@@ -7,6 +7,7 @@ class CreateCrmGoogleContactSyncs < ActiveRecord::Migration
       t.string :lead_group_id
       t.string :contact_group_id
       t.string :user_id
+      t.string :token
       t.timestamps
     end
   end

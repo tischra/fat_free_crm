@@ -630,4 +630,11 @@ en-US:
 
   # If you need custom format look at 
   # http://code.google.com/p/calendardateselect/wiki/ChangingDateFormatCustom
+  #Crm Google Contact Sync
   calendar_date_select_format: american
+  view_crm_google_contact_sync: View Google Contact Sync
+  crm_google_contact_sync: Google Contact Sync
+  create_crm_google_contact_sync: Create Google Contact Sync
+  lead_group: Lead group
+  contact_group: Contact group
+  create: Create
