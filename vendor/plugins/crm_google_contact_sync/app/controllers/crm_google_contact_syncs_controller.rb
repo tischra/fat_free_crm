@@ -85,7 +85,7 @@ class CrmGoogleContactSyncsController < ApplicationController
   def sync_google_contact
 
     next_param = "http://" + request.host_with_port + "/complete_sign_in_google"
-    scope_param = 'https://www.google.com/m8/feeds/contacts/default/full%20https://www.google.com/m8/feeds/groups/default/full'
+    scope_param = 'https://www.google.com/m8/feeds/contacts/default/full?max-results=100000%20https://www.google.com/m8/feeds/groups/default/full'
     google_contact = CrmGoogleContactSync.find_by_user_id(@current_user.id)
     # if google_contact
     #  if google_contact.lead_group_id
@@ -95,40 +95,29 @@ class CrmGoogleContactSyncsController < ApplicationController
     #end
     secure_param = "0"
     session_param = "1"
-    puts 'scope_param'
-    puts scope_param
     root_url = "https://www.google.com/accounts/AuthSubRequest"
     query_string = "?scope=#{scope_param}&session=#{session_param}&secure=#{secure_param}&next=#{next_param}"
     redirect_to root_url + query_string
   end
   def complete_sign_in_google
+
     client = GData::Client::DocList.new
+
     client.authsub_token = params[:token] # extract the single-use token from the URL query params
+     path = File.join(RAILS_ROOT, 'dsaprivkey.pem')
+     puts 'path'
+     puts path
+   # client.authsub_private_key = File.read(path)
+    
     session[:token] = client.auth_handler.upgrade()
     client.authsub_token = session[:token] if session[:token]
     #logger.info client.auth_handler.info
     # redirect_to '/'
-    feed = client.get('https://www.google.com/m8/feeds/contacts/default/full?max-results=0').to_xml
+      
+    feed = client.get('https://www.google.com/m8/feeds/contacts/default/full?max-results=100000').to_xml
     google_contact =  CrmGoogleContactSync.find_by_email(feed.elements['author'].elements['email'].text)
     if google_contact
-      if google_contact.lead_group_id
-        feed = client.get('https://www.google.com/m8/feeds/groups/default/full').to_xml
-        feed.elements.each('entry') do |entry|
 
-          if entry.elements["link[@rel='edit']"] and entry.elements["link[@rel='edit']"].attributes['href'] == google_contact.lead_group_id
-            puts 'google_contact.lead_group_id'
-            puts google_contact.lead_group_id
-            #    client.delete(google_contact.lead_group_id)
-
-          end
-          if  entry.elements["link[@rel='edit']"] and entry.elements["link[@rel='edit']"].attributes['href'] == google_contact.contact_group_id
-            puts 'google_contact.contact_group_id'
-            puts google_contact.contact_group_id
-            #  client.delete(google_contact.contact_group_id)
-
-          end
-        end
-      end
       feed = client.get('https://www.google.com/m8/feeds/groups/default/full').to_xml
       entry_str = <<-EOF
 
@@ -167,8 +156,6 @@ class CrmGoogleContactSyncsController < ApplicationController
       feed_lead = client.post('https://www.google.com/m8/feeds/groups/default/full', entry_str).to_xml
       edit_uri_lead = feed_lead.elements["link[@rel='edit']"].attributes['href']
       uri_lead_id = feed_lead.elements['id'].text
-      puts 'params[:token]'
-      puts params[:token]
       google_contact.update_attributes(:lead_group_id =>  uri_lead_id, :contact_group_id => uri_contact_id, :token => session[:token])
    
     else
