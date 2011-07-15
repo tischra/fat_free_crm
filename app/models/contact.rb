@@ -56,10 +56,10 @@ class Contact < ActiveRecord::Base
   has_many    :contact_opportunities, :dependent => :destroy
   has_many    :opportunities, :through => :contact_opportunities, :uniq => true, :order => "opportunities.id DESC"
   has_many    :tasks, :as => :asset, :dependent => :destroy, :order => 'created_at DESC'
-  has_many    :activities, :as => :subject, :order => 'created_at DESC'
+  has_many    :activities, :as => :subject, :order => 'created_at DESC',:dependent => :destroy
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Business'"
   has_many    :emails, :as => :mediator
-  has_many    :contact_groups, :dependent => :destroy
+  has_many    :contact_groups
   accepts_nested_attributes_for :business_address, :allow_destroy => true
 
   named_scope :created_by, lambda { |user| { :conditions => [ "user_id = ?", user.id ] } }

@@ -6,8 +6,9 @@ require 'rufus/scheduler'
 scheduler = Rufus::Scheduler.start_new
 
 ## It will print message every i minute
-scheduler.every("2m") do
+scheduler.every("1m") do
   puts 'Check Google Contact Sync'
-  CrmGoogleContactSync.sync
+  CrmGoogleContactSync.sync_lead
+  CrmGoogleContactSync.sync_contact
   puts 'End'
 end

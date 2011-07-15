@@ -127,7 +127,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def update
     @contact = Contact.my(@current_user).find(params[:id])
-
+    @contact.update_attribute("updated_status", true)
     respond_to do |format|
       if @contact.update_with_account_and_permissions(params)
         format.js
@@ -154,6 +154,7 @@ class ContactsController < ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @contact = Contact.my(@current_user).find(params[:id])
+
     @contact.destroy if @contact
 
     respond_to do |format|

@@ -1,8 +1,8 @@
 class CreateContactGroups < ActiveRecord::Migration
   def self.up
     create_table :contact_groups do |t|
-      t.boolean :status, :default => false
       t.references  :contact
+      t.string  :email
       t.references  :crm_google_contact_sync
       t.timestamps
     end

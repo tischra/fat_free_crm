@@ -1,6 +1,6 @@
 <h1><%=t :view_crm_google_contact_sync %>: </h1>
 <% if  @crm_google_contact_sync.token == nil %>
-<%= link_to "Sync Google contacs", :controller => 'crm_google_contact_syncs', :action => "sync_google_contact" %>
+<%= link_to "Sync Google contacs", :controller => 'crm_google_contact_syncs', :action => "sync_google_contact", :id => @crm_google_contact_sync.email.to_s  %>
 <% end %>
 <p>
   <b><%=t :email %>:</b>

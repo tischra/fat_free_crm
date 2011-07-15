@@ -56,7 +56,7 @@ class Lead < ActiveRecord::Base
   has_many    :activities, :as => :subject, :order => 'created_at DESC'
   has_one     :business_address, :dependent => :destroy, :as => :addressable, :class_name => "Address", :conditions => "address_type='Business'"
   has_many    :emails, :as => :mediator
-  has_many    :lead_groups, :dependent => :destroy
+  has_many    :lead_groups
   accepts_nested_attributes_for :business_address, :allow_destroy => true
   
   named_scope :only, lambda { |filters| { :conditions => [ "status IN (?)" + (filters.delete("other") ? " OR status IS NULL" : ""), filters ] } }

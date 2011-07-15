@@ -83,9 +83,11 @@ class CrmGoogleContactSyncsController < ApplicationController
     end
   end
   def sync_google_contact
-
     next_param = "http://" + request.host_with_port + "/complete_sign_in_google"
-    scope_param = 'https://www.google.com/m8/feeds/contacts/default/full?max-results=100000%20https://www.google.com/m8/feeds/groups/default/full'
+    scope_param = 'https://www.google.com/m8/feeds/contacts/' + params[:id].to_s + '.com/full?max-results=100000%20https://www.google.com/m8/feeds/groups/default/full%20https://www.google.com/m8/feeds/contacts/' + params[:id].to_s + '.com/full'
+    session[:email] = params[:id] + '.com'
+    puts 'scope_param'
+    puts scope_param
     google_contact = CrmGoogleContactSync.find_by_user_id(@current_user.id)
     # if google_contact
     #  if google_contact.lead_group_id
@@ -101,20 +103,24 @@ class CrmGoogleContactSyncsController < ApplicationController
   end
   def complete_sign_in_google
 
-    client = GData::Client::DocList.new
+    client = GData::Client::Contacts.new
 
     client.authsub_token = params[:token] # extract the single-use token from the URL query params
-     path = File.join(RAILS_ROOT, 'dsaprivkey.pem')
-     puts 'path'
-     puts path
-   # client.authsub_private_key = File.read(path)
+    path = File.join(RAILS_ROOT, 'dsaprivkey.pem')
+    puts 'path'
+    puts path
+    # client.authsub_private_key = File.read(path)
     
     session[:token] = client.auth_handler.upgrade()
     client.authsub_token = session[:token] if session[:token]
     #logger.info client.auth_handler.info
     # redirect_to '/'
-      
-    feed = client.get('https://www.google.com/m8/feeds/contacts/default/full?max-results=100000').to_xml
+    scope_param =  'https://www.google.com/m8/feeds/contacts/' + session[:email].to_s + '/full?max-results=100000'
+
+ 
+      feed = client.get(scope_param).to_xml
+
+
     google_contact =  CrmGoogleContactSync.find_by_email(feed.elements['author'].elements['email'].text)
     if google_contact
 

@@ -22,6 +22,7 @@ class CreateContacts < ActiveRecord::Migration
       t.string      :facebook,    :limit => 128
       t.string      :twitter,     :limit => 128
       t.string      :address
+      t.boolean     :updated_status, :default => false
       t.date        :born_on
       t.boolean     :do_not_call, :null => false, :default => false
       t.datetime    :deleted_at
