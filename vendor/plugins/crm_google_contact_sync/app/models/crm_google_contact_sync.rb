@@ -216,15 +216,17 @@ class CrmGoogleContactSync < ActiveRecord::Base
             feed = client.get('https://www.google.com/m8/feeds/contacts/' + google_contact_sync.email + '/full?max-results=100000').to_xml
             puts feed
             feed.elements.each('entry') do |entry|
-                                          gcontact_group_member_ship_info = ''
-            entry.elements.each("gContact:groupMembershipInfo") do |member|
-              if gcontact_group_member_ship_info.length < member.attributes["href"].length
-                gcontact_group_member_ship_info = member.attributes["href"]
+              gcontact_group_member_ship_info = ''
+              entry.elements.each("gContact:groupMembershipInfo") do |member|
+                if gcontact_group_member_ship_info.length < member.attributes["href"].length
+                  gcontact_group_member_ship_info = member.attributes["href"]
+                end
               end
-            end
-              email = entry.elements["gd:email"].attributes['address']
-              if email == contact.email and gcontact_group_member_ship_info == google_contact_sync.contact_group_id
-                check = true
+              if entry.elements["gd:email"]
+                email = entry.elements["gd:email"].attributes['address']
+                if email == contact.email and gcontact_group_member_ship_info == google_contact_sync.contact_group_id
+                  check = true
+                end
               end
             end
             if check == false
@@ -270,12 +272,12 @@ class CrmGoogleContactSync < ActiveRecord::Base
               client.authsub_token =  google_contact_sync.token
               feed = client.get('https://www.google.com/m8/feeds/contacts/' + google_contact_sync.email + '/full?max-results=100000').to_xml
               feed.elements.each('entry') do |entry|
-                            gcontact_group_member_ship_info = ''
-            entry.elements.each("gContact:groupMembershipInfo") do |member|
-              if gcontact_group_member_ship_info.length < member.attributes["href"].length
-                gcontact_group_member_ship_info = member.attributes["href"]
-              end
-            end
+                gcontact_group_member_ship_info = ''
+                entry.elements.each("gContact:groupMembershipInfo") do |member|
+                  if gcontact_group_member_ship_info.length < member.attributes["href"].length
+                    gcontact_group_member_ship_info = member.attributes["href"]
+                  end
+                end
                 email = entry.elements["gd:email"].attributes['address']
                 if email == contact.email and gcontact_group_member_ship_info == google_contact_sync.contact_group_id
                   check = true
@@ -440,7 +442,7 @@ class CrmGoogleContactSync < ActiveRecord::Base
       end
     end
   end
- def CrmGoogleContactSync.sync_lead
+  def CrmGoogleContactSync.sync_lead
     google_contact_syncs = CrmGoogleContactSync.find(:all)
     google_contact_syncs.each do |google_contact_sync|
       client = GData::Client::Contacts.new
@@ -506,12 +508,12 @@ class CrmGoogleContactSync < ActiveRecord::Base
             feed = client.get('https://www.google.com/m8/feeds/contacts/' + google_contact_sync.email + '/full?max-results=100000').to_xml
             puts feed
             feed.elements.each('entry') do |entry|
-                                          gcontact_group_member_ship_info = ''
-            entry.elements.each("gContact:groupMembershipInfo") do |member|
-              if gcontact_group_member_ship_info.length < member.attributes["href"].length
-                gcontact_group_member_ship_info = member.attributes["href"]
+              gcontact_group_member_ship_info = ''
+              entry.elements.each("gContact:groupMembershipInfo") do |member|
+                if gcontact_group_member_ship_info.length < member.attributes["href"].length
+                  gcontact_group_member_ship_info = member.attributes["href"]
+                end
               end
-            end
               email = entry.elements["gd:email"].attributes['address']
               if email == lead.email and gcontact_group_member_ship_info == google_contact_sync.lead_group_id
                 check = true
@@ -560,12 +562,12 @@ class CrmGoogleContactSync < ActiveRecord::Base
               client.authsub_token =  google_contact_sync.token
               feed = client.get('https://www.google.com/m8/feeds/contacts/' + google_contact_sync.email + '/full?max-results=100000').to_xml
               feed.elements.each('entry') do |entry|
-                            gcontact_group_member_ship_info = ''
-            entry.elements.each("gContact:groupMembershipInfo") do |member|
-              if gcontact_group_member_ship_info.length < member.attributes["href"].length
-                gcontact_group_member_ship_info = member.attributes["href"]
-              end
-            end
+                gcontact_group_member_ship_info = ''
+                entry.elements.each("gContact:groupMembershipInfo") do |member|
+                  if gcontact_group_member_ship_info.length < member.attributes["href"].length
+                    gcontact_group_member_ship_info = member.attributes["href"]
+                  end
+                end
                 email = entry.elements["gd:email"].attributes['address']
                 if email == lead.email and gcontact_group_member_ship_info == google_contact_sync.lead_group_id
                   check = true
